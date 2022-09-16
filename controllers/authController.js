@@ -102,9 +102,10 @@ exports.signup = async (req, res, next) => {
       verified:false,
       
     });
+    
     newUser.save().then((result)=>{
       //send otp 
-      otpverifyemail(result,res);
+      otpverifyemail(req.body.email,res);
     }).catch((err) =>{
       console.log(err);
       res.json({
@@ -224,33 +225,37 @@ exports.protect = async (req, res, next) => {
     return next();
   }
 };
+//global
+let otp=20463;
 
-const otpverifyemail= async ({_id,email },res)=> {
+const otpverifyemail= async (email,res)=> {
 try{
-const otp= `${Math.floor(Math.random()*9000)}`;
+//const otp= `${Math.floor(Math.random()*9000)}`;
+otp+=1;
 const mailoptions = {
   from: process.env.AUTH_EMAIL,
   to:email,
   subject: "verify email",
   html:`<p>enter <b>${otp} </b>to verify your email</p><br><p>expires in an hour</p>`,
 };
+console.log("sent otp ",otp,"to",email);
+// const newuserotp= await new userotp({
+//   userId:email,
+//   otp: otp,
+//   created: Date.now(),
+//   expires: Date.now()+3600000,
+// });
 
-const newuserotp= await new userotp({
-  userId:_id,
-  otp: otp,
-  created: Date.now(),
-  expires: Date.now()+3600000,
-});
-
-await newuserotp.save();
+// await newuserotp.save();
+// console.log(newuserotp);
 await transporter.sendMail(mailoptions);
 res.json({
   status:"PENDING",
   message:"otp verification mail sent",
   data:{
-    userId:_id,
-    email,
-  }
+    userId:email,
+    
+  },
 });
 }catch(err){
   res.json({
@@ -261,3 +266,73 @@ res.json({
 }
 
 };
+
+exports.verifyEmail= async (req,res)=>{
+  try{
+    let { thisuserId, thisotp}=req.body;
+    
+    if(!thisuserId || !otp){
+      throw Error("blank otp not allowed");
+    }
+    
+    else{
+      
+      // const userotpRecords = userotp.find({
+      //   userId: thisuserId,
+      // });
+      
+      
+      
+      // if(userotpRecords.length<=0){
+      //   console.log("not there");
+      //   //no record 
+      //   throw new Error(
+      //     "record doesnt exist or is already verified. please signup/login"
+      //   );
+      // }
+      // else{
+        //find rec
+        //const { expires }= userotpRecords[0];
+        //const thisotp= userotpRecords[0].otp;
+
+        // if(expires< Date.now()){
+        //   //expired
+        //   await userotp.deleteMany({ userId });
+        //   throw new Error("otp expired,please try again");
+        // }else
+        console.log(thisotp,otp);
+               const validotp=(thisotp==otp);
+               if(!validotp){
+                //wrong otp
+                throw new Error("invalid otp, check inbox and retry");
+               }
+               else{
+                //success
+                User.updateOne({email:thisuserId},{verified: true});
+                //userotp.deleteMany({ userId });
+                
+
+
+
+
+    createSendToken(newUser, 201, res);
+    
+                res.json({
+                  status:"verified",
+                  message: "verify success",
+                });
+               }
+        
+      }
+
+    }
+  
+    catch(error){
+      res.json({
+        status:"failed",
+        message: error.message,
+      });
+
+    }
+  
+}
