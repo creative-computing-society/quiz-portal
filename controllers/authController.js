@@ -1,9 +1,26 @@
 // const crypto = require('crypto');
 const { promisify } = require('util');
+
+const userotp = require('./../models/userotp');
+
+
+const  nodemailer= require('nodemailer');
+
+
 const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
 const { response } = require('express');
 const Question = require('./../models/questionModel');
+ let transporter= nodemailer.createTransport({
+  host:"smtp-mail.outlook.com",
+  auth:{
+    user:process.env.AUTH_EMAIL,
+    pass: process.env.AUTH_PASS,
+
+  }
+ });
+
+
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -21,6 +38,7 @@ const shuffleArray = (array) => {
   return array;
 };
 
+//session occ by current user
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
   const cookieOptions = {
@@ -41,6 +59,9 @@ const createSendToken = (user, statusCode, res) => {
     },
   });
 };
+
+
+
 
 // ROUTE TO SIGN UP
 exports.signup = async (req, res, next) => {
@@ -63,6 +84,13 @@ exports.signup = async (req, res, next) => {
       shuffleArray(hardQuestions).slice(0, 3),
     ];
 
+    
+
+
+
+
+    
+
     const newUser = await User.create({
       name: req.body.name,
       email: req.body.email,
@@ -71,9 +99,21 @@ exports.signup = async (req, res, next) => {
       password: req.body.password,
       techStack: req.body.techStack,
       assignedQuestions,
+      verified:false,
+      
+    });
+    newUser.save().then((result)=>{
+      //send otp 
+      otpverifyemail(result,res);
+    }).catch((err) =>{
+      console.log(err);
+      res.json({
+        status: 'failed',
+        message: 'error while saving details',
+      })
     });
 
-    createSendToken(newUser, 201, res);
+   
   } catch (err) {
     res.status(404).json({
       status: 'failed',
@@ -81,6 +121,10 @@ exports.signup = async (req, res, next) => {
     });
   }
 };
+
+
+
+
 
 // ROUTE TO LOGIN
 exports.login = async (req, res, next) => {
@@ -179,4 +223,41 @@ exports.protect = async (req, res, next) => {
     });
     return next();
   }
+};
+
+const otpverifyemail= async ({_id,email },res)=> {
+try{
+const otp= `${Math.floor(Math.random()*9000)}`;
+const mailoptions = {
+  from: process.env.AUTH_EMAIL,
+  to:email,
+  subject: "verify email",
+  html:`<p>enter <b>${otp} </b>to verify your email</p><br><p>expires in an hour</p>`,
+};
+
+const newuserotp= await new userotp({
+  userId:_id,
+  otp: otp,
+  created: Date.now(),
+  expires: Date.now()+3600000,
+});
+
+await newuserotp.save();
+await transporter.sendMail(mailoptions);
+res.json({
+  status:"PENDING",
+  message:"otp verification mail sent",
+  data:{
+    userId:_id,
+    email,
+  }
+});
+}catch(err){
+  res.json({
+    status:"FAILED",
+    message: err.message,
+  });
+
+}
+
 };

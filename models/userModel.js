@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
+
+
 // A USER MUST SEND HIS NAME, EMAIL, PHONE NUMBER, BRANCH AND PASSWORD
 const userSchema = new mongoose.Schema({
   name: {
@@ -15,6 +17,9 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, 'Please provide a valid email'],
     // TO VERIFY THAT THE STRING SENT IS ACTUALLY AN EMAIL
+    
+
+
   },
   phoneNumber: {
     type: String,
@@ -48,7 +53,10 @@ const userSchema = new mongoose.Schema({
   assignedQuestions: {
     type: Array,
   },
+  verified: Boolean,
 });
+
+
 
 // CREATING AN OBJECT USER BASED ON THE USER SCHEMA
 const User = mongoose.model('User', userSchema);
