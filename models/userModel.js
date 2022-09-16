@@ -29,13 +29,6 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'Please provide a password'],
-    // LENGTH OF PASSWORD SHOULD BE BETWEEN 6 AND 20 CHARACTERS
-    minlength: 6,
-    maxLength: 20,
-  },
-  techStack: {
-    type: String,
-    required: [true, 'Please provide your tech stack'],
   },
   score: {
     type: Number,
@@ -50,9 +43,13 @@ const userSchema = new mongoose.Schema({
   },
   shift: {
     type: Number,
-    required: [true, 'A user mush have a shift'],
+    required: [true, 'A user must have a shift'],
     min: [1, 'Shift can only be one or two'],
     max: [2, 'Shift can only be one or two'],
+  },
+  applicationNumber: {
+    type: String,
+    required: [true, 'A user must have an application number'],
   },
 });
 

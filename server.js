@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-
 const app = require('./app');
 
 // IN CASE OF UNCAUGHT_EXCEPTION
@@ -28,8 +27,20 @@ mongoose
   .then(() => console.log('DB connection successful!'));
 
 //   STARTING SERVER
-const port = process.env.PORT || 3000;
-const server = app.listen(port, () => {
+const port = process.env.PORT || 3376;
+// const server = app.listen(port, () => {
+//   console.log(`App running on port ${port}...`);
+// });
+
+const https = require('https');
+const fs = require('fs');
+
+const options = {
+  key: fs.readFileSync('privkey.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
+
+https.createServer(options, app).listen(port, () => {
   console.log(`App running on port ${port}...`);
 });
 

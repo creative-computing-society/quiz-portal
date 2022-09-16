@@ -47,6 +47,7 @@ const createSendToken = (user, statusCode, res) => {
 // ROUTE TO SIGN UP
 exports.signup = async (req, res, next) => {
   try {
+    console.log(req.body);
     // GET ALL QUESTIONS
     const easy = Question.find({ difficulty: 'easy' });
     const medium = Question.find({ difficulty: 'medium' });
@@ -69,13 +70,15 @@ exports.signup = async (req, res, next) => {
     // IF GLOBAL VARIABLR I IS EVEN USER IS ASSIGNED SHIFT TWO
     if (i % 2 === 0) shift = 2;
 
+    const otp = `${Math.floor(Math.random() * 8999) + 1000}`;
+
     const newUser = await User.create({
       name: req.body.name,
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
       branch: req.body.branch,
-      password: req.body.password,
-      techStack: req.body.techStack,
+      applicationNumber: req.body.applicationNumber,
+      password: otp,
       assignedQuestions,
       shift,
     });
