@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY package.json .
 
+RUN npm install nodemon
 RUN npm install
 
 COPY . /app
