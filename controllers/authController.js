@@ -133,7 +133,7 @@ exports.login = async (req, res, next) => {
     const { email, password } = req.body;
 
     // 1) Check if email and password exist
-    if (!email || !password) {
+    if (!email || !password ) {
       res.status(400).json({
         status: 'failed',
         message: 'Please provide email and password!',
@@ -147,6 +147,13 @@ exports.login = async (req, res, next) => {
       res.status(401).json({
         status: 'failed',
         message: 'Incorrect email or password',
+      });
+      return next();
+    }
+    if (!user.verified) {
+      res.status(401).json({
+        status: 'failed',
+        message: 'not verified',
       });
       return next();
     }

@@ -53,7 +53,10 @@ const userSchema = new mongoose.Schema({
   assignedQuestions: {
     type: Array,
   },
-  verified: Boolean,
+  verified: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 
