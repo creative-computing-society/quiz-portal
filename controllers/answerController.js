@@ -28,8 +28,12 @@ exports.checkAnswers = async (req, res, next) => {
       return next();
     }
 
+    // Variable to store question number and answers
+    let answers = [];
+
     // Find user
     const user = await User.findById(userId);
+
     // In case no matching user exists
     if (!user) {
       res.status(400).json({
@@ -38,6 +42,7 @@ exports.checkAnswers = async (req, res, next) => {
       });
       return next();
     }
+
     // Declaring variable to store new score and setting it to zero as answers will only be submitted once
     let newScore = 0;
 
@@ -53,15 +58,26 @@ exports.checkAnswers = async (req, res, next) => {
         return next();
       }
 
+      // Store question number and answer in array
+      answers.push({
+        questionNumber: question.questionNumber,
+        givenAnswer: questionIdAndAnswer[1],
+        correctAnswer: question.answer,
+        difficulty: question.difficulty,
+      });
+
       // Match correct answer to question with the marked answer
       if (question.answer === questionIdAndAnswer[1])
         newScore += question.points;
+      else newScore -= 1;
     }
+
     // Update user score
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       {
         score: newScore,
+        answers,
       },
       {
         new: true,
@@ -72,6 +88,7 @@ exports.checkAnswers = async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       result: newScore,
+      answers,
     });
   } catch (err) {
     res.status(404).json({

@@ -41,6 +41,11 @@ const userSchema = new mongoose.Schema({
   assignedQuestions: {
     type: Array,
   },
+  answers: [
+    {
+      type: Object,
+    },
+  ],
   shift: {
     type: Number,
     required: [true, 'A user must have a shift'],

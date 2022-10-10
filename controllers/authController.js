@@ -1,18 +1,49 @@
-// const crypto = require('crypto');
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
-const { response } = require('express');
 const Question = require('./../models/questionModel');
+const nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
 
+// INITIALIZING PATH TO .CONFIG FILE
+dotenv.config({ path: './config.env' });
+
+// CREATING TRANSPORTER FOR NODEMAILER
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_ID,
+    pass: process.env.EMAIL_APP_PASSWORD,
+  },
+});
+
+// CREATE SIGN TOKEN
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
 
+// FUNCITON TO SEND OTP IN MAIL
+const sendOTP = async (email, generatedOTP) => {
+  try {
+    let mailOptions = {
+      from: 'ccs@thapar.edu',
+      to: email,
+      subject: 'Password for CCS Recruitment Test',
+      html: `<p>Thank you for registering!!</p>`,
+    };
+
+    await transporter.sendMail(mailOptions);
+  } catch (err) {
+    return true;
+  }
+};
+
+// GLOBAL VARIABLE TO DIVIDE REGISTRATIONS INTO SLOT 1 AND 2
 let i = 0;
 
+// SHUFFLE ARRAY
 const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -23,6 +54,7 @@ const shuffleArray = (array) => {
   return array;
 };
 
+// CREATE TOKEN TO BE SENT TO BE ASSIGNED TO THE USER
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
   const cookieOptions = {
@@ -47,7 +79,6 @@ const createSendToken = (user, statusCode, res) => {
 // ROUTE TO SIGN UP
 exports.signup = async (req, res, next) => {
   try {
-    console.log(req.body);
     // GET ALL QUESTIONS
     const easy = Question.find({ difficulty: 'easy' });
     const medium = Question.find({ difficulty: 'medium' });
@@ -61,9 +92,12 @@ exports.signup = async (req, res, next) => {
     ]);
 
     const assignedQuestions = [
-      shuffleArray(easyQuestions).slice(0, 4),
-      shuffleArray(mediumQuestions).slice(0, 3),
-      shuffleArray(hardQuestions).slice(0, 3),
+      ...shuffleArray(easyQuestions.map((el) => el.questionNumber)).slice(0, 4),
+      ...shuffleArray(mediumQuestions.map((el) => el.questionNumber)).slice(
+        0,
+        3
+      ),
+      ...shuffleArray(hardQuestions.map((el) => el.questionNumber)).slice(0, 3),
     ];
 
     let shift = 1;
@@ -71,6 +105,8 @@ exports.signup = async (req, res, next) => {
     if (i % 2 === 0) shift = 2;
 
     const otp = `${Math.floor(Math.random() * 8999) + 1000}`;
+
+    // const err = sendOTP(req.body.email, otp);
 
     const newUser = await User.create({
       name: req.body.name,
@@ -110,7 +146,7 @@ exports.login = async (req, res, next) => {
     // 2) Check if user exists && password is correct
     const user = await User.findOne({ email });
 
-    if (!user || !(user.password === password)) {
+    if (!user || user.password !== password) {
       res.status(401).json({
         status: 'failed',
         message: 'Incorrect email or password',
