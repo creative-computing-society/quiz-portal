@@ -45,6 +45,12 @@ const questionSchema = new mongoose.Schema({
       message: 'Difficulty is either: easy, medium or hard',
     },
   },
+  slot: {
+    type: Number,
+    required: [true, 'A question should have a slot'],
+    min: [1, 'Slot can only be 1 or 2'],
+    max: [2, 'Slot can only be 1 or 2'],
+  },
 });
 
 // VIRTUAL PROPERTY TO AUTOMATICALLY ASSIGN POINTS BASED ON QUESTION DIFFICULTY

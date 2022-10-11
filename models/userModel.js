@@ -56,6 +56,22 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'A user must have an application number'],
   },
+  links: {
+    type: String,
+    default: '',
+  },
+  nonTechFields: {
+    type: String,
+    default: '',
+  },
+  nonTechLinks: {
+    type: String,
+    default: '',
+  },
+  techStack: {
+    type: String,
+    default: '',
+  },
 });
 
 // CREATING AN OBJECT USER BASED ON THE USER SCHEMA
