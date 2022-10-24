@@ -95,6 +95,8 @@ exports.signup = async (req, res, next) => {
       hard,
     ]);
 
+    // console.log(easyQuestions)
+
     const assignedQuestions = [
       ...shuffleArray(easyQuestions.map((el) => el.questionNumber)).slice(0, 5),
       ...shuffleArray(mediumQuestions.map((el) => el.questionNumber)).slice(
@@ -146,7 +148,7 @@ exports.login = async (req, res, next) => {
         status: 'failed',
         message: 'Please provide email and password!',
       });
-      return next();
+      return;
     }
     // 2) Check if user exists && password is correct
     const user = await User.findOne({ email });
@@ -156,7 +158,7 @@ exports.login = async (req, res, next) => {
         status: 'failed',
         message: 'Incorrect email or password',
       });
-      return next();
+      return;
     }
 
     if (user.cheatAttempts >= 3) {
@@ -165,7 +167,7 @@ exports.login = async (req, res, next) => {
         message:
           'You have been disqualified as you have been caught cheating three times.',
       });
-      return next();
+      return;
     }
 
     // 3) If everything ok, send token to client

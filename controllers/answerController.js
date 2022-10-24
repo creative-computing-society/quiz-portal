@@ -43,53 +43,70 @@ exports.checkAnswers = async (req, res, next) => {
       return next();
     }
 
-    // Declaring variable to store new score and setting it to zero as answers will only be submitted once
-    let newScore = 0;
+    // RUN CODE ONLY FOR ONE SUBMISSION
+    if (!user.hasAttempted) {
+      // Declaring variable to store new score and setting it to zero as answers will only be submitted once
+      let newScore = 0;
 
-    for (const questionIdAndAnswer of questionIdsAndAnswers) {
-      // Find question from the provided question Ids
-      let question = await Question.findById(questionIdAndAnswer[0]);
-      // In case no matching question exists
-      if (!question) {
-        res.status(400).json({
-          status: 'failed',
-          err: 'No question matching the questionId found',
+      for (const questionIdAndAnswer of questionIdsAndAnswers) {
+        // Find question from the provided question Ids
+        let question = await Question.findById(questionIdAndAnswer[0]);
+        // In case no matching question exists
+        if (!question) {
+          res.status(400).json({
+            status: 'failed',
+            err: 'No question matching the questionId found',
+          });
+          return next();
+        }
+
+        // Store question number and answer in array
+        answers.push({
+          questionNumber: question.questionNumber,
+          givenAnswer: questionIdAndAnswer[1],
+          correctAnswer: question.answer,
+          difficulty: question.difficulty,
         });
-        return next();
+
+        // Match correct answer to question with the marked answer
+        if (question.answer === questionIdAndAnswer[1])
+          newScore += question.points;
+        else if (questionIdAndAnswer[1] === 'unanswered') continue;
+        else newScore -= 1;
       }
 
-      // Store question number and answer in array
-      answers.push({
-        questionNumber: question.questionNumber,
-        givenAnswer: questionIdAndAnswer[1],
-        correctAnswer: question.answer,
-        difficulty: question.difficulty,
+      // Update user score and mark that he has attempted the test
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        {
+          hasAttempted: true,
+          score: newScore,
+          answers,
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+
+      // Log the user out
+      res.cookie('jwt', 'loggedout', {
+        expires: new Date(Date.now() + 10 * 1000),
+        httpOnly: true,
       });
 
-      // Match correct answer to question with the marked answer
-      if (question.answer === questionIdAndAnswer[1])
-        newScore += question.points;
-      else newScore -= 1;
-    }
-
-    // Update user score
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      {
-        score: newScore,
+      // Send the final score as response
+      res.status(200).json({
+        status: 'success',
+        result: newScore,
         answers,
-      },
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
-    // Send the final score as response
-    res.status(200).json({
-      status: 'success',
-      result: newScore,
-      answers,
-    });
+      });
+    } else {
+      res.status(401).json({
+        status: 'failed',
+        err: 'You have already submitted the test',
+      });
+    }
   } catch (err) {
     res.status(404).json({
       status: 'failed',

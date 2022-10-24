@@ -6,6 +6,7 @@ const questionController = require('./../controllers/questionController');
 const router = express.Router();
 
 router.post('/createQuestion', questionController.createQuestion);
+router.get('/getAllQuestions', questionController.getAllQuestions);
 
 // USER MUST BE LOGGED IN TO ACCESS THE FOLLOWING ROUTES
 router.use(authController.protect);

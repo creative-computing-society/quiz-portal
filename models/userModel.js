@@ -72,6 +72,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  hasAttempted: {
+    type: Boolean,
+    default: false,
+  },
+  newAssignedQuestions: {
+    type: Array,
+    default: null,
+  },
+  beenAssigned: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 // CREATING AN OBJECT USER BASED ON THE USER SCHEMA
