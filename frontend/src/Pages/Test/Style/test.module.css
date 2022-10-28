@@ -23,6 +23,7 @@
     background-color: #DFF6FF;
     margin-left: 17%;
     font-family: "poppins";
+    user-select: none;
 }
 
 .testHeading {
