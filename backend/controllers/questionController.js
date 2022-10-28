@@ -58,9 +58,9 @@ exports.getQuestions = async (req, res, next) => {
     // IF THE USER SEARCHES FOR QUESTIONS FOR THE FIRST TIME
     if (!user.beenAssigned) {
       // GET ALL QUESTIONS
-      const easy = Question.find({ difficulty: 'easy', slot: user.shift });
-      const medium = Question.find({ difficulty: 'medium', slot: user.shift });
-      const hard = Question.find({ difficulty: 'hard', slot: user.shift });
+      const easy = Question.find({ difficulty: 'easy' });
+      const medium = Question.find({ difficulty: 'medium' });
+      const hard = Question.find({ difficulty: 'hard' });
 
       // RESOLVE PROMISES SIMULTANEOUSLY TO REDUCE WAITING TIME
       const [easyQuestions, mediumQuestions, hardQuestions] = await Promise.all(
