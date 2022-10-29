@@ -9,6 +9,8 @@ router.post('/login', authController.login);
 router.get('/logout', authController.logout);
 router.get('/leaderboard', userController.leaderboard);
 
+// router.patch('/changeShift', userController.changeShift);
+
 // USER MUST BE LOGGED IN TO ACCESS THE FOLLOWING ROUTES
 router.use(authController.protect);
 

@@ -136,3 +136,33 @@ exports.cheatAttempt = async (req, res, next) => {
     message,
   });
 };
+
+// exports.changeShift = async (req, res, next) => {
+//   try {
+//     // FINDING ALL USERS WHO'S BEEN ASSIGNED IS FALSE
+//     const users = await User.find({ hasAttempted: false });
+
+//     for (const user of users) {
+//       await User.findByIdAndUpdate(
+//         user._id,
+//         {
+//           shift: 3,
+//         },
+//         {
+//           new: true,
+//           runValidators: true,
+//         }
+//       );
+//     }
+
+//     res.status(200).json({
+//       status: 'success',
+//       message: 'users shift changed',
+//     });
+//   } catch (err) {
+//     res.status(401).json({
+//       status: 'failed',
+//       err: err.message,
+//     });
+//   }
+// };
