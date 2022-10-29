@@ -83,29 +83,6 @@ exports.signup = async (req, res, next) => {
     // IF GLOBAL VARIABLR I IS EVEN USER IS ASSIGNED SHIFT TWO
     if (i % 2 === 0) shift = 2;
 
-    // GET ALL QUESTIONS
-    const easy = Question.find({ difficulty: 'easy', slot: shift });
-    const medium = Question.find({ difficulty: 'medium', slot: shift });
-    const hard = Question.find({ difficulty: 'hard', slot: shift });
-
-    // RESOLVE PROMISES SIMULTANEOUSLY TO REDUCE WAITING TIME
-    const [easyQuestions, mediumQuestions, hardQuestions] = await Promise.all([
-      easy,
-      medium,
-      hard,
-    ]);
-
-    // console.log(easyQuestions)
-
-    const assignedQuestions = [
-      ...shuffleArray(easyQuestions.map((el) => el.questionNumber)).slice(0, 5),
-      ...shuffleArray(mediumQuestions.map((el) => el.questionNumber)).slice(
-        0,
-        4
-      ),
-      ...shuffleArray(hardQuestions.map((el) => el.questionNumber)).slice(0, 3),
-    ];
-
     // GENERATE OTP TO SAVE AS PASSWORD
     const otp = `${Math.floor(Math.random() * 8999) + 1000}`;
 
@@ -118,7 +95,6 @@ exports.signup = async (req, res, next) => {
       branch: req.body.branch,
       applicationNumber: req.body.applicationNumber,
       password: otp,
-      assignedQuestions,
       shift,
       links: req.body.links,
       nonTechFields: req.body.nonTechFields,
