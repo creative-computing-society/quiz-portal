@@ -1,7 +1,9 @@
 # Quiz Portal
 
 Quiz portal made to conduct recruitment test for Creative Computing Society. The Portal can be used to conduct tests in various shifts, with unique questions from a question bank being assigned to students from each shift. Camera and Microphone permissions are required to give the test. The portal also has cheat detection methods like switching windows, tabs, fullscreen, etc.
-![image](https://user-images.githubusercontent.com/45175270/209334017-82c9f9e6-114d-435d-b1c7-0462e9ee7cef.png)
+
+A tutorial video for the portal has been uploaded on youtube - https://www.youtube.com/watch?v=NTH6LncgPzA&ab_channel=CCSTIET
+
 ![image](https://user-images.githubusercontent.com/45175270/209334209-5b3e4292-8901-4538-bd6f-e48de23976a3.png)
 
 ## Tech Stack
