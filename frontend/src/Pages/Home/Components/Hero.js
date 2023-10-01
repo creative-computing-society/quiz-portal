@@ -4,13 +4,12 @@ import logo from "../Assets/white-logo.png"
 
 
 
-
 function Hero() {
   return (
     
     <div className={styles.heroContainer}>
-      <img src={heroImg} alt="hero-bg-img" className={styles.heroImg}/>
       <img src={logo} alt="ccs-logo" className={styles.logo}/>
+      <img src={heroImg} alt="hero-bg-img" className={styles.heroImg}/>
     
       <div className={styles.buttons}> 
         <a href="/login"><input type="button" value="Login" className={`${styles.button} ${styles.loginButton}`} /></a>

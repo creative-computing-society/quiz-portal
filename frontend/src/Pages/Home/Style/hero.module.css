@@ -27,11 +27,12 @@ img, a {
 
 .heroContainer {
   position: relative;
-  background-image: url("../Assets/heroBg.svg");
-  height: calc(100vh - 6vw);
+  /* background-image: url("../Assets/Background_New.jpg"); */
+  background-position: 0% 0%;
+  height: calc(100vh - 4vw);
   /* width: 100vw; */
   /* object-fit: contain; */
-  padding-top: 30px;
+  padding-top: 6%;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -39,9 +40,10 @@ img, a {
 
 .heroImg {
   position: absolute;
-  height: 20vw;
+  top:55%;
+  height: 22vw;
   bottom: 20px;
-  left: 50%;
+  left: 70%;
   transform: translate(-50%, 0);
 }
 
@@ -52,7 +54,7 @@ img, a {
   /* position: absolute;
   top: 5vw;
   left: 0; */
-  width: 200px;
+  width: 250px;
   margin: 0 auto;
 }
 
@@ -69,7 +71,7 @@ img, a {
   font-size: 20px;
   font-family: Montserrat;
   color: white;
-  background: #3f3d56;
+  background: #274e61;
   box-shadow: 7px 11px 5px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   border: none;
@@ -79,7 +81,7 @@ img, a {
 }
 
 .button:hover {
-  background-color: #2e2d3c;
+  background-color: #01151e;
   transform: scale(1.1);
   transition-duration: 400ms;
 }
@@ -92,7 +94,7 @@ img, a {
 .spacer {
   display: flex;
   align-items: center;
-  height: 8vw;
+  height: 10vw;
 }
 
 @media (max-width: 900px) {

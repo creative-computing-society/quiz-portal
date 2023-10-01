@@ -1,5 +1,5 @@
 .swiper {
-  width: 70%;
+  width: 60%;
   padding-top: 50px;
   padding-bottom: 50px;
   margin: 0;
@@ -21,7 +21,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgb(215 233 255);
+  /* background: rgb(215 233 255); */
 }
 
 @media (max-width: 768px) {

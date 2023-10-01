@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import logo from "../Assets/black-logo.png";
 import { api_url } from "../../../config";
+import ImageCaptureForm from "./webcam";
 
 const url = api_url + "/users/signup";
 
@@ -20,12 +21,14 @@ const LeftContainer = (props) => {
   const [message, setMessage] = useState("");
   const [nonTech, setNonTech] = useState([]);
   const [nonTechLinks, setNonTechLinks] = useState("")
+  const [imageURL, setImage] = useState("")
   // const [nonTech, setNonTech] = useState({
-  //   "Marketing": false,
-  //   "Content Writing": false,
-  //   "Designing": false,
-  //   "Video Editing": false
-  // });
+    //   "Marketing": false,
+    //   "Content Writing": false,
+    //   "Designing": false,
+    //   "Video Editing": false
+    // });
+  const [pic, setpic] = useState(false);
 
   const [button, setButton] = useState(
     <button type="submit" className={styles.button}>
@@ -71,6 +74,7 @@ const LeftContainer = (props) => {
           links: links,
           nonTechFields: nonTech.toString(),
           nonTechLinks: nonTechLinks,
+          image: imageURL,
         });
         // console.log(resp.data);
         setName("");
@@ -82,6 +86,7 @@ const LeftContainer = (props) => {
         setLinks("");
         setMessage("");
         setNonTech([]);
+        setImage("");
         const checklist = document.getElementsByTagName("input");
         for (const element of checklist) {
           element.checked = false;
@@ -197,6 +202,13 @@ const LeftContainer = (props) => {
           placeholder="Links (Github, Codechef, etc.)"
           className={styles.inputBox}
         />
+
+        <button onClick={()=>{setpic(!pic)}}>Capture the pic..</button>
+        <div className="container mt-5">
+          {pic&&(
+            <ImageCaptureForm  func={(imgURL)=>{setImage(imgURL)}}/>
+          )} 
+        </div>
         <div className={styles.checkboxes}>
           <div className={styles.checkHeading}>Select the Non-Tech fields you wish to contribute to (if any)</div>
           <div className={styles.check}>

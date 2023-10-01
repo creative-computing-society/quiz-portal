@@ -1,0 +1,7 @@
+.bodybg{
+  background-image: url("../Assets/Background_New.jpg");
+    background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-position: 29% 0%;
+}
