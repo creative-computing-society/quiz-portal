@@ -9,11 +9,13 @@ function Hero() {
     
     <div className={styles.heroContainer}>
       <img src={logo} alt="ccs-logo" className={styles.logo}/>
-      <img src={heroImg} alt="hero-bg-img" className={styles.heroImg}/>
-    
-      <div className={styles.buttons}> 
-        <a href="/login"><input type="button" value="Login" className={`${styles.button} ${styles.loginButton}`} /></a>
-        <a href="/signup"><input type="button" value="Register for test" className={`${styles.button} ${styles.registerButton}`} /></a>
+      
+      <div className={styles.lowerCont}>
+        <div className={styles.buttons}> 
+          <a href="/login"><input type="button" value="Login" className={`${styles.button} ${styles.loginButton}`} /></a>
+          <a href="/signup"><input type="button" value="Register for test" className={`${styles.button} ${styles.registerButton}`} /></a>
+        </div>
+        <img src={heroImg} alt="hero-bg-img" className={styles.heroImg}/>
       </div>
     
     </div>

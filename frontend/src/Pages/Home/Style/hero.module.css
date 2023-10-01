@@ -39,12 +39,8 @@ img, a {
 }
 
 .heroImg {
-  position: absolute;
-  top:55%;
   height: 22vw;
   bottom: 20px;
-  left: 70%;
-  transform: translate(-50%, 0);
 }
 
 /*ccs logo*/
@@ -54,15 +50,24 @@ img, a {
   /* position: absolute;
   top: 5vw;
   left: 0; */
-  width: 250px;
+  width: 22vw;
   margin: 0 auto;
 }
 
-.buttons {
+
+.lowerCont{
   display: flex;
   justify-content: center;
+  gap: 8%;
+  margin-top: 8vh;
+}
+
+
+.buttons {
+  display: flex;
+  flex-direction: column;
   gap: 30px;
-  margin-top: 10vh;
+  margin-top: 14vh;
 }
 
 .button {
@@ -75,7 +80,6 @@ img, a {
   box-shadow: 7px 11px 5px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   border: none;
-  display: block;
   /* margin-top: 1.875em; */
   cursor: pointer;
 }
@@ -97,16 +101,42 @@ img, a {
   height: 10vw;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
   .heroImg {
     height: max(200px, 30vw);
     bottom: 10vh;
   }
+  .logo{
+    width: max(35vw, 30vh);
+    margin-top: 15%;
+  }
+  .lowerCont{
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0vh;
+  }
+  .buttons {
+    margin-top: 6%;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25%;
+  }
 }
 
 @media (max-width: 768px) {
-  .buttons {
+  .logo{
+    width: 50vw;
+    margin-top: 15%;
+  }
+  .lowerCont{
     flex-direction: column;
     align-items: center;
+    margin-bottom: 0vh;
+  }
+  .buttons {
+    margin-top: 6%;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25%;
   }
 }
