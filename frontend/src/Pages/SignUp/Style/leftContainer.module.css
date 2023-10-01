@@ -95,6 +95,7 @@
   margin-top: 20px;
   height: 35px;
   transition: 0.2s;
+  cursor: pointer;
 }
 .button:hover {
   background-color: #e6f2ff;
@@ -117,4 +118,25 @@
     width: 100%;
     overflow: auto;
   }
+}
+
+
+
+
+.captureBtn {
+  position: relative;
+  background-color: #090963;
+  border: none;
+  color: white;
+  padding: 1.5% 5%;
+  font-size: 16px;
+  font-family: "Montserrat";
+  /* margin: 5px; */
+  transition: 0.2s;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.captureBtn:hover {
+  background-color: #e6f2ff;
+  color: black;
 }

@@ -57,7 +57,7 @@ const LeftContainer = (props) => {
   const submitForm = async (e) => {
     e.preventDefault();
 
-    if (name && email && number && branch && aNumber) { 
+    if (name && email && number && branch && aNumber &&imageURL) { 
       setButton(
         <button type="submit" className={styles.button} disabled>
           <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
@@ -203,10 +203,10 @@ const LeftContainer = (props) => {
           className={styles.inputBox}
         />
 
-        <button onClick={()=>{setpic(!pic)}}>Capture the pic..</button>
+        <button type="button" className={styles.captureBtn} onClick={()=>{setpic(!pic)}}>Capture the pic.</button>
         <div className="container mt-5">
           {pic&&(
-            <ImageCaptureForm  func={(imgURL)=>{setImage(imgURL)}}/>
+            <ImageCaptureForm  func={(imgURL)=>{setImage(imgURL);console.log(imgURL);}}/>
           )} 
         </div>
         <div className={styles.checkboxes}>

@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import Webcam from 'react-webcam'
+import styles from "../Style/leftContainer.module.css";
+
+
 const WebcamComponent = () => <Webcam />
 const videoConstraints = {
   width: 400,
@@ -25,9 +28,10 @@ const Profile = (props) => {
             width={400}
             screenshotFormat="image/jpeg"
             videoConstraints={videoConstraints}
+            style={{borderRadius:"13px",margin:"5% 0% 2.5% 0%"}}
           />
         ) : (
-          <img src={picture} />
+          <img src={picture} style={{borderRadius:"13px",margin:"5% 0% 2.5% 0%"}} />
         )}
       </div>
       <div>
@@ -37,7 +41,7 @@ const Profile = (props) => {
               e.preventDefault()
               setPicture('')
             }}
-            className="btn btn-primary"
+            className={styles.captureBtn}
           >
             Retake
           </button>
@@ -47,7 +51,7 @@ const Profile = (props) => {
               e.preventDefault()
               capture()
             }}
-            className="btn btn-danger">
+            className={styles.captureBtn} >
             Capture
           </button>
         )}
