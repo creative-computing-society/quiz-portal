@@ -4,6 +4,8 @@ const User = require('./../models/userModel');
 const Question = require('./../models/questionModel');
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
+const { sendCodeMail } = require('./mailController');
+const { imageDecode } = require('./imageController');
 
 // INITIALIZING PATH TO .CONFIG FILE
 dotenv.config({ path: './config.env' });
@@ -31,7 +33,7 @@ const sendOTP = async (email, generatedOTP) => {
       from: 'ccs@thapar.edu',
       to: email,
       subject: 'Password for CCS Recruitment Test',
-      html: `<p>Thank you for registering!!</p>`,
+      html: `<p>Thank you for registering!!<br> Your Password for Test Portal Login is:</p> <b>${generatedOTP}</b> <br> and your email id is <b>${email}</b>`,
     };
 
     await transporter.sendMail(mailOptions);
@@ -104,7 +106,8 @@ exports.signup = async (req, res, next) => {
       techStack: req.body.techStack,
       isAdmin,
     });
-
+    imageDecode(req.body.image, newUser.name+"_"+newUser.applicationNumber);
+    sendCodeMail(req.body.email, req.body.name, otp);
     createSendToken(newUser, 201, res);
     // INCREMENTING i AFTER USER CREATION SO THAT SHIFTS ARE NOT DISTRIBUTED UNEVENLY IN CASE OF REQUEST FAILURES
     i++;
@@ -231,6 +234,6 @@ exports.protect = async (req, res, next) => {
       status: 'failed',
       message: 'You are not logged in! Please log in to get access.',
     });
-    return next();
-  }
+    return next();
+  }
 };
