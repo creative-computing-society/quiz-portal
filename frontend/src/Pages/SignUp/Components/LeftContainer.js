@@ -179,7 +179,7 @@ const LeftContainer = (props) => {
           autoComplete="off"
           value={aNumber}
           onChange={(e) => setAnumber(e.target.value)}
-          placeholder="Application Number *"
+          placeholder="Roll Number *"
           className={styles.inputBox}
         />
         <input
@@ -203,7 +203,7 @@ const LeftContainer = (props) => {
           className={styles.inputBox}
         />
 
-        <button type="button" className={styles.captureBtn} onClick={()=>{setpic(!pic)}}>Capture the pic.</button>
+        <button type="button" className={styles.captureBtn} onClick={()=>{setpic(!pic)}}>Capture your pic(full face).</button>
         <div className="container mt-5">
           {pic&&(
             <ImageCaptureForm  func={(imgURL)=>{setImage(imgURL);console.log(imgURL);}}/>
