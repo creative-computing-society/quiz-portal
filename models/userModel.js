@@ -30,6 +30,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide a password'],
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+  adminPassword: {
+    type: String,
+  },
   score: {
     type: Number,
     default: 0,

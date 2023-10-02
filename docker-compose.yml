@@ -7,5 +7,5 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - "3376:3376"
+      - "4376:4376"
     restart: always

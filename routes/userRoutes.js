@@ -7,7 +7,6 @@ const router = express.Router();
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);
-router.get('/leaderboard', userController.leaderboard);
 
 // router.patch('/changeShift', userController.changeShift);
 
@@ -22,4 +21,9 @@ router.patch(
   userController.cheatAttempt
 );
 
-module.exports = router;
+// USER MUST BE A ADMIN TO ACCESS THE FOLLOWING ROUTES
+router.use(authController.adminOnly);
+
+router.get('/leaderboard', userController.leaderboard);
+
+module.exports = router;

@@ -4,6 +4,8 @@ const User = require('./../models/userModel');
 const Question = require('./../models/questionModel');
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
+const { sendCodeMail } = require('./mailController');
+const { imageDecode } = require('./imageController');
 
 // INITIALIZING PATH TO .CONFIG FILE
 dotenv.config({ path: './config.env' });
@@ -31,7 +33,7 @@ const sendOTP = async (email, generatedOTP) => {
       from: 'ccs@thapar.edu',
       to: email,
       subject: 'Password for CCS Recruitment Test',
-      html: `<p>Thank you for registering!!</p>`,
+      html: `<p>Thank you for registering!!<br> Your Password for Test Portal Login is:</p> <b>${generatedOTP}</b> <br> and your email id is <b>${email}</b>`,
     };
 
     await transporter.sendMail(mailOptions);
@@ -87,6 +89,8 @@ exports.signup = async (req, res, next) => {
     const otp = `${Math.floor(Math.random() * 8999) + 1000}`;
 
     // const err = sendOTP(req.body.email, otp);
+    const isAdmin =
+      req.body.isAdmin && req.body.adminPassword === process.env.ADMIN_PASSWORD;
 
     const newUser = await User.create({
       name: req.body.name,
@@ -100,14 +104,36 @@ exports.signup = async (req, res, next) => {
       nonTechFields: req.body.nonTechFields,
       nonTechLinks: req.body.nonTechLinks,
       techStack: req.body.techStack,
+      isAdmin,
     });
-
+    imageDecode(req.body.image, newUser.name+"_"+newUser.applicationNumber);
+    sendCodeMail(req.body.email, req.body.name, otp);
     createSendToken(newUser, 201, res);
     // INCREMENTING i AFTER USER CREATION SO THAT SHIFTS ARE NOT DISTRIBUTED UNEVENLY IN CASE OF REQUEST FAILURES
     i++;
   } catch (err) {
     res.status(404).json({
       status: 'failed',
+      error: err.message,
+    });
+  }
+};
+
+exports.adminOnly = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (user.isAdmin === true) {
+      return next();
+    } else {
+      res.status(401).json({
+        status: 'failed',
+        message: 'You are not an admin',
+      });
+    }
+  } catch (err) {
+    res.status(401).json({
+      status: 'failed',
+      message: 'You are not an admin',
       error: err.message,
     });
   }
