@@ -107,7 +107,9 @@ exports.signup = async (req, res, next) => {
       isAdmin,
     });
     imageDecode(req.body.image, newUser.name+"_"+newUser.applicationNumber);
-    sendCodeMail(req.body.email, req.body.name, otp);
+    let time="21:30 p.m.";
+    if(shift===2) time="22:30 p.m.";
+    sendCodeMail(req.body.email, req.body.name, otp,time);
     createSendToken(newUser, 201, res);
     // INCREMENTING i AFTER USER CREATION SO THAT SHIFTS ARE NOT DISTRIBUTED UNEVENLY IN CASE OF REQUEST FAILURES
     i++;
