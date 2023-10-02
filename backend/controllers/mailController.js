@@ -2,20 +2,20 @@ const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
 let mailTransporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'ccs@thapar.edu',
-        pass: process.env.EMAIL_PASSWORD
-    }
+  service: 'gmail',
+  auth: {
+    user: 'ccs@thapar.edu',
+    pass: process.env.EMAIL_PASSWORD
+  }
 });
-exports.sendCodeMail = async function (emailto, name, code,time) {
+exports.sendCodeMail = async function (emailto, name, code, time) {
 
-    let mailDetails = {
-        from: 'ccs@thapar.edu',
-        to: emailto,
-        subject: "CREDENTIALS FOR RECRUITMENT PORTAL",
-        html:
-            `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  let mailDetails = {
+    from: 'ccs@thapar.edu',
+    to: emailto,
+    subject: "CREDENTIALS FOR RECRUITMENT PORTAL",
+    html:
+      `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -789,7 +789,7 @@ exports.sendCodeMail = async function (emailto, name, code,time) {
                                         font-size: 20px;
                                       "
                                     >
-                                      <b>Tour test is on 10 October, ${time}</b>
+                                      <b>Your test is on 10 October, ${time}</b>
                                       <br>
                                        <b>Please be ready 15 minutes before your time slot</b>
                                     </p>
@@ -930,7 +930,7 @@ exports.sendCodeMail = async function (emailto, name, code,time) {
                                   >
                                     <!--[if mso
                                       ]><a
-                                        href="http://raptus.ccstiet.com/register"
+                                        href="https://recruitments.ccstiet.com/"
                                         target="_blank"
                                         hidden
                                       >
@@ -938,7 +938,7 @@ exports.sendCodeMail = async function (emailto, name, code,time) {
                                           xmlns:v="urn:schemas-microsoft-com:vml"
                                           xmlns:w="urn:schemas-microsoft-com:office:word"
                                           esdevVmlButton
-                                          href="http://raptus.ccstiet.com/register"
+                                          href="https://recruitments.ccstiet.com/"
                                           style="
                                             height: 44px;
                                             v-text-anchor: middle;
@@ -982,7 +982,7 @@ exports.sendCodeMail = async function (emailto, name, code,time) {
                                         border-top-width: 2px;
                                       "
                                       ><a
-                                        href="http://raptus.ccstiet.com/register"
+                                        href="https://recruitments.ccstiet.com/"
                                         class="es-button es-button-1688446223849"
                                         target="_blank"
                                         style="
@@ -1433,6 +1433,18 @@ exports.sendCodeMail = async function (emailto, name, code,time) {
                                           valign="top"
                                           style="padding: 0; margin: 0"
                                         >
+                                         <a
+                                            target="_blank"
+                                            href="https://discord.gg/aCt5AVyT"
+                                            style="
+                                              -webkit-text-size-adjust: none;
+                                              -ms-text-size-adjust: none;
+                                              mso-line-height-rule: exactly;
+                                              text-decoration: underline;
+                                              color: #ffffff;
+                                              font-size: 14px;
+                                            "
+                                            >
                                           <img
                                             src="https://qiwoqu.stripocdn.email/content/assets/img/messenger-icons/circle-white-bordered/discort-circle-white-bordered.png"
                                             alt="Discord"
@@ -1446,6 +1458,7 @@ exports.sendCodeMail = async function (emailto, name, code,time) {
                                               -ms-interpolation-mode: bicubic;
                                             "
                                           />
+                                          </a>
                                         </td>
                                       </tr>
                                     </table>
@@ -1469,13 +1482,13 @@ exports.sendCodeMail = async function (emailto, name, code,time) {
 </html>
 `
 
-    };
-    await mailTransporter.sendMail(mailDetails, function (err, data) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Email sent successfully');
-        }
-    });
+  };
+  await mailTransporter.sendMail(mailDetails, function (err, data) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Email sent successfully');
+    }
+  });
 }
 
