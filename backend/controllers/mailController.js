@@ -8,7 +8,7 @@ let mailTransporter = nodemailer.createTransport({
         pass: process.env.EMAIL_APP_PASSWORD
     }
 });
-exports.sendCodeMail = async function (emailto, name, code) {
+exports.sendCodeMail = async function (emailto, name, code,time) {
 
     let mailDetails = {
         from: 'ccs@thapar.edu',
@@ -789,7 +789,9 @@ exports.sendCodeMail = async function (emailto, name, code) {
                                         font-size: 20px;
                                       "
                                     >
-                                      <b>The test is on 10 October, 10 p.m.</b>
+                                      <b>Tour test is on 10 October, ${time}</b>
+                                      <br>
+                                       <b>Please be ready 15 minutes before your time slot</b>
                                     </p>
                                     <p
                                       style="
