@@ -1,11 +1,11 @@
 const nodemailer = require('nodemailer');
-
-
+const dotenv = require('dotenv');
+dotenv.config({ path: './config.env' });
 let mailTransporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'ccs@thapar.edu',
-        pass: process.env.EMAIL_APP_PASSWORD
+        pass: process.env.EMAIL_PASSWORD
     }
 });
 exports.sendCodeMail = async function (emailto, name, code,time) {
