@@ -13,7 +13,7 @@ exports.sendCodeMail = async function (emailto, name, code,time) {
     let mailDetails = {
         from: 'ccs@thapar.edu',
         to: emailto,
-        subject: "YOUR PASSWORD FOR RECRUITMENT PORTAL:" + code,
+        subject: "CREDENTIALS FOR RECRUITMENT PORTAL",
         html:
             `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html
