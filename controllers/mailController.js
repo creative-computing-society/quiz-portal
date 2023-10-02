@@ -789,7 +789,7 @@ exports.sendCodeMail = async function (emailto, name, code,time) {
                                         font-size: 20px;
                                       "
                                     >
-                                      <b>Tour test is on 10 October, ${time}</b>
+                                      <b>Your test is on 10 October, ${time}</b>
                                       <br>
                                        <b>Please be ready 15 minutes before your time slot</b>
                                     </p>
