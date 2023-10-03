@@ -8,4 +8,6 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "4376:4376"
+    volumes:
+      - ./images:/container/path/images
     restart: always
