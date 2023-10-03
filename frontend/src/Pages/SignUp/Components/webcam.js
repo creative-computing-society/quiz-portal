@@ -45,15 +45,13 @@ const Profile = (props) => {
         {picture === '' ? (
           <Webcam
             audio={false}
-            height={400}
             ref={webcamRef}
-            width={400}
             screenshotFormat="image/jpeg"
             videoConstraints={videoConstraints}
-            style={{ borderRadius: "13px", margin: "5% 0% 2.5% 0%" }}
+            className={styles.cam}
           />
         ) : (
-          <img src={picture} style={{ borderRadius: "13px", margin: "5% 0% 2.5% 0%" }} alt="captured" />
+          <img src={picture} className={styles.cam} alt="captured" />
         )}
       </div>
       
