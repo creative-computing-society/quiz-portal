@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5vh;
+  gap: 4vh;
   width: 50%;
   height: 100%;
   display: flex;
@@ -12,6 +12,7 @@
   background-color: white;
   border-radius: 40px 0 0 40px;
   padding: 12px;
+  padding-bottom: 2%;
 }
 
 .leftContainerForm {
@@ -107,18 +108,7 @@
   right: 10px;
 }
 
-@media (max-width: 768px) {
-  .leftContainer {
-    border-radius: 40px;
-    width: 100%;
-    padding: 20px;
-  }
 
-  .leftContainerForm {
-    width: 100%;
-    overflow: auto;
-  }
-}
 
 
 
@@ -139,4 +129,73 @@
 .captureBtn:hover {
   background-color: #e6f2ff;
   color: black;
+}
+
+
+.clickBtn {
+  position: relative;
+  background-color: #090963;
+  border: none;
+  color: white;
+  width:55%;
+  padding: 1.5% 5%;
+  font-size: 16px;
+  font-family: "Montserrat";
+  /* margin: 5px; */
+  transition: 0.2s;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.clickBtn:hover {
+  background-color: #e6f2ff;
+  color: black;
+}
+
+
+.switchBtn {
+  position: relative;
+  border: 2px solid #090963;
+  background-color: whitesmoke;
+  color: #000;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: "Montserrat";
+  transition: 0.2s;
+  cursor: pointer;
+  scale: 0.9;
+  border-radius: 4px;
+}
+
+.buttonHub{
+  display: flex;
+  justify-content: space-around;
+}
+
+
+
+
+@media (max-width: 1200px) {
+  .buttonHub{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .switchBtn{
+    margin-bottom: 2.5%;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .leftContainer {
+    border-radius: 40px;
+    width: 100%;
+    padding: 20px;
+    padding-bottom: 16%;
+  }
+
+  .leftContainerForm {
+    width: 100%;
+    overflow: auto;
+  }
 }

@@ -47,6 +47,7 @@
 
 .logo {
   height: 18%;
+  margin-top: 8%;
 }
 
 .heading {
@@ -111,6 +112,9 @@
     border-radius: 40px;
     width: 100%;
     padding: 20px;
+  }
+  .logo{
+    margin-top: 30%;
   }
 
   .leftContainerForm {

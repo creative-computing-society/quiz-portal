@@ -203,7 +203,7 @@ const LeftContainer = (props) => {
           className={styles.inputBox}
         />
 
-        <button type="button" className={styles.captureBtn} onClick={()=>{setpic(!pic)}}>Capture your pic(full face).</button>
+        <button type="button" className={styles.captureBtn} onClick={()=>{setpic(!pic)}}>Capture your Face-ID</button>
         <div className="container mt-5">
           {pic&&(
             <ImageCaptureForm  func={(imgURL)=>{setImage(imgURL);console.log(imgURL);}}/>
