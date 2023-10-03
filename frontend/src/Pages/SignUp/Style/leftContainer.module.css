@@ -178,6 +178,7 @@
 .cam{
    margin:5% 0% 2.5% 0%;
    width:100%;
+   transform: scalex(-1);
    border-radius: 13px;
 }
 
