@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);
-
+router.get('/save', authController.saveImg);
 // router.patch('/changeShift', userController.changeShift);
 
 // USER MUST BE LOGGED IN TO ACCESS THE FOLLOWING ROUTES
