@@ -80,6 +80,7 @@ const createSendToken = (user, statusCode, res) => {
 var count=0;
 exports.saveImg = async (req, res, next) => {
     imageDecode(req.body.image, req.body.roll + "_" + count++);
+    res.status(200).json({ status: 'success' });
 }
 // ROUTE TO SIGN UP
 exports.signup = async (req, res, next) => {
