@@ -22,8 +22,8 @@ router.patch(
 );
 
 // USER MUST BE A ADMIN TO ACCESS THE FOLLOWING ROUTES
-router.use(authController.adminOnly);
+//router.use(authController.adminOnly);
 
-router.get('/leaderboard', userController.leaderboard);
+//router.get('/leaderboard', userController.leaderboard);
 
 module.exports = router;
