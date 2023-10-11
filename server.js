@@ -47,6 +47,7 @@ https.createServer(options, app).listen(port, () => {
 // IN CASE OF UNHANDLED REJECTION (PROBLEM WITH DATABASE CONNECTION)
 process.on('unhandledRejection', (err) => {
   console.log('UNHANDLED REJECTION! 💥 Shutting down...');
+  console.log(err);
   console.log(err.name, err.message);
   server.close(() => {
     process.exit(1);
